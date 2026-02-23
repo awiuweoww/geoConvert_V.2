@@ -1,4 +1,3 @@
-
 import { forwardRef, memo } from "react";
 import { cn } from "../../utils/cn";
 import DotLoading from "../dot-loading/DotLoading";
@@ -60,8 +59,8 @@ const sizeStyles = {
 };
 
 /**
- * A customizable button component that supports variants, colors, sizes,
- * loading state, spinner, full-width layout, and native button attributes.
+ * Komponen tombol yang dapat disesuaikan yang mendukung varian, warna, ukuran,
+ * status pemuatan, spinner, tata letak lebar penuh, dan atribut tombol asli.
  */
 export const Button = memo(
     forwardRef<HTMLButtonElement, ButtonProps>(
@@ -91,15 +90,15 @@ export const Button = memo(
                     data-testid={dataTestId}
                     className={cn(
                         "group inline-flex items-center justify-center rounded-lg font-medium transition-all select-none font-montserrat",
-                        // Base styles
+                        // Gaya dasar
                         sizeStyles[size],
                         buttonBaseStyles[variant]?.[color],
-                        // Hover & Active states (only if not disabled)
+                        // Keadaan Hover & Active (hanya jika tidak disabled)
                         !isDisabled && buttonHoverStyles[variant]?.[color],
                         !isDisabled && "active:scale-[0.98] active:shadow-inner cursor-pointer",
-                        // Disabled state
+                        // Keadaan Disabled
                         isDisabled && "opacity-60 cursor-not-allowed pointer-events-none",
-                        // Layout
+                        // Tata Letak
                         fullWidth && "w-full",
                         className
                     )}

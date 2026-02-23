@@ -3,6 +3,10 @@ import { rspack } from "@rspack/core";
 import RefreshPlugin from "@rspack/plugin-react-refresh";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
+import dotenv from "dotenv";
+
+// Load environment variables for the build process
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -82,6 +86,9 @@ export default defineConfig({
 	plugins: [
 		new rspack.HtmlRspackPlugin({
 			template: "./index.html"
+		}),
+		new rspack.DefinePlugin({
+			"process.env.RSPACK_GRPC_HOST": JSON.stringify(process.env.RSPACK_GRPC_HOST || "http://localhost:9080")
 		}),
 		isDev && new RefreshPlugin()
 	].filter(Boolean),

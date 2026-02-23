@@ -39,7 +39,7 @@ const Step: React.FC<StepProps> = ({
 
 	return (
 		<div className="relative flex items-center justify-between mb-32 last:mb-0 w-full">
-			{/* Center Line Marker */}
+			{/* Penanda Garis Tengah */}
 			<div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center h-full">
 				<motion.div
 					initial={{ scale: 0 }}
@@ -56,7 +56,7 @@ const Step: React.FC<StepProps> = ({
 				</motion.div>
 			</div>
 
-			{/* Content Side */}
+			{/* Sisi Konten */}
 			<motion.div
 				initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
 				whileInView={{ opacity: 1, x: 0 }}
@@ -91,7 +91,7 @@ const Step: React.FC<StepProps> = ({
 				</p>
 			</motion.div>
 
-			{/* Illustration Side */}
+			{/* Sisi Ilustrasi */}
 			<motion.div
 				initial={{ opacity: 0, scale: 0.8, x: isLeft ? 50 : -50 }}
 				whileInView={{ opacity: 1, scale: 1, x: 0 }}
@@ -131,7 +131,7 @@ const Tutorial: React.FC<{ isDark: boolean; lang: "ID" | "EN" }> = ({
 
 	return (
 		<div className="relative w-full max-w-6xl mx-auto px-6 py-32 z-10">
-			{/* Background Decorations */}
+			{/* Dekorasi Latar Belakang */}
 			<div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-transparent via-brand-red/20 to-transparent pointer-events-none" />
 
 			<motion.div
@@ -225,7 +225,7 @@ const Tutorial: React.FC<{ isDark: boolean; lang: "ID" | "EN" }> = ({
 				/>
 			</div>
 
-			{/* Call to action ending */}
+			{/* Penutup Panggilan Aksi */}
 			<motion.div
 				initial={{ opacity: 0 }}
 				whileInView={{ opacity: 1 }}

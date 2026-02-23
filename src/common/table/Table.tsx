@@ -14,24 +14,24 @@ export interface TableProps<T> {
     keyExtractor: (item: T) => string | number;
     className?: string;
     /**
-     * Text to display when data is empty
+     * Teks yang ditampilkan saat data kosong
      */
     emptyMessage?: string;
     /**
-     * Optional loading state
+     * Status pemuatan opsional
      */
     isLoading?: boolean;
 }
 
 /**
- * A reusable table component with support for custom cells, loading state, and empty state.
+ * Komponen tabel yang dapat digunakan kembali dengan dukungan untuk sel khusus, status pemuatan, dan status kosong.
  */
 function Table<T>({
     data,
     columns,
     keyExtractor,
     className,
-    emptyMessage = "No data available",
+    emptyMessage = "Belum ada data tersedia",
     isLoading = false,
 }: TableProps<T>) {
     if (isLoading) {
@@ -40,7 +40,7 @@ function Table<T>({
                 <div className="flex flex-col items-center gap-2">
                     <div className="h-8 w-8 animate-spin rounded-full border-4 border-neutral-200 border-t-brand-red dark:border-neutral-700 dark:border-t-brand-red"></div>
                     <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                        Loading data...
+                        Memuat data...
                     </span>
                 </div>
             </div>
@@ -104,5 +104,5 @@ function Table<T>({
     );
 }
 
-// Type assertion for memo compatibility with generics
+// Pernyataan tipe untuk kompatibilitas memo dengan generic
 export default memo(Table) as typeof Table;

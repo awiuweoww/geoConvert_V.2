@@ -29,3 +29,11 @@ declare module "*.webp" {
     const content: string;
     export default content;
 }
+
+// Environment variables type definitions
+declare namespace NodeJS {
+    interface ProcessEnv {
+        readonly NODE_ENV: "development" | "production" | "test";
+        readonly RSPACK_GRPC_HOST: string;
+    }
+}

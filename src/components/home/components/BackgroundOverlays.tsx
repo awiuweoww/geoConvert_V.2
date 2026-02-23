@@ -29,7 +29,7 @@ const BackgroundOverlays: React.FC<BackgroundOverlaysProps> = ({
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.8 }}
                         className={cn(
-                            "fixed inset-0 pointer-events-none z-[0]",
+                            "fixed inset-0 pointer-events-none z-0",
                             isDark ? "bg-black/90" : "bg-bg-light-base/60"
                         )}
                         style={{
@@ -47,7 +47,7 @@ const BackgroundOverlays: React.FC<BackgroundOverlaysProps> = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className={cn(
-                            "fixed inset-0 pointer-events-none z-[1] grid-pattern transition-opacity duration-200 ease-in-out",
+                            "fixed inset-0 pointer-events-none z-1 grid-pattern transition-opacity duration-200 ease-in-out",
                             isDark ? "opacity-[0.05]" : "opacity-[0.08]"
                         )}
                     />
@@ -63,7 +63,7 @@ const BackgroundOverlays: React.FC<BackgroundOverlaysProps> = ({
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5 }}
                     className={cn(
-                        "fixed inset-0 pointer-events-none z-[1]",
+                        "fixed inset-0 pointer-events-none z-1",
                         isDark ? "bg-bg-dark-base" : "bg-gray-50"
                     )}
                 />

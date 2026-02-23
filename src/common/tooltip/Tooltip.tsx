@@ -9,16 +9,15 @@ export interface TooltipProps {
 }
 
 /**
- * A small tooltip that appears at a given (x, y) coordinate, containing some text.
- * This is a very simple component, and does not include any behavior for handling
- * mouse events, or for preventing the tooltip from appearing outside the bounds of
- * the window.
+ * Tooltip kecil yang muncul pada koordinat (x, y) tertentu, berisi teks.
+ * Ini adalah komponen yang sangat sederhana, dan tidak menyertakan perilaku apa pun untuk menangani
+ * peristiwa mouse, atau untuk mencegah tooltip muncul di luar batas jendela.
  *
- * @param {{ x: number, y: number, text: string }} x
- *   The coordinates of the tooltip, and the text to display.
+ * @param {{ x: number, y: number, text: string }} props
+ *   Koordinat tooltip dan teks yang akan ditampilkan.
  * @returns {JSX.Element}
- *   A div, with the given text as its contents, and with its position set to
- *   "fixed" at the given coordinates.
+ *   Sebuah div, dengan teks yang diberikan sebagai isinya, dan dengan posisinya diatur ke
+ *   "fixed" pada koordinat yang diberikan.
  */
 const Tooltip: FC<TooltipProps> = ({ x, y, text }) => (
     <div
@@ -31,10 +30,10 @@ const Tooltip: FC<TooltipProps> = ({ x, y, text }) => (
         }}
         className={cn(
             "rounded-md px-3 py-1.5",
-            "bg-neutral-900 dark:bg-neutral-800", // Fallback for bg-background-100-2
+            "bg-neutral-900 dark:bg-neutral-800", // Cadangan untuk bg-background-100-2
             "text-xs text-white",
             "shadow-md whitespace-nowrap",
-            "ring-1 ring-white/40", // Replaced outline with ring for better control
+            "ring-1 ring-white/40", // Mengganti outline dengan ring untuk kontrol yang lebih baik
             "font-montserrat",
             "animate-in fade-in zoom-in-95 duration-200"
         )}

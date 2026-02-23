@@ -4,7 +4,7 @@ import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { fromLonLat } from "ol/proj";
 import { AnimatePresence, motion } from "framer-motion";
-import { History, MousePointer2, RefreshCw } from "lucide-react";
+import { MousePointer2, RefreshCw } from "lucide-react";
 
 import ConvertModal from "./components/ConvertModal";
 import FloatingControls from "./components/FloatingControls";
@@ -16,10 +16,11 @@ import { useMapLogic } from "../../hooks/useMapLogic";
 import type { SavedPoint } from "../../types/geoTypes";
 import { cn } from "../../utils/cn";
 import { Button } from "../../common/button/Button";
+import pinIcon from "../../common/icons/pin.png";
 
-// ─── Inline Sub-Components ──────────────────────────────────────────────────
+// ─── Sub-Komponen Internal ────────────
 
-/** Tooltip bantuan klik peta (atas tengah peta). */
+/** Tooltip bantuan klik peta . */
 const InfoHelper: React.FC<{ isDark: boolean; helperText: string; clickCount: number }> = ({
 	isDark, helperText, clickCount
 }) => (
@@ -39,26 +40,34 @@ const InfoHelper: React.FC<{ isDark: boolean; helperText: string; clickCount: nu
 	</div>
 );
 
-/** Badge jumlah titik tersimpan (kiri bawah peta). */
+
+
+/** Badge jumlah titik tersimpan . */
 const SavedPointsBadge: React.FC<{ isDark: boolean; count: number; label: string; onClick?: () => void }> = ({
 	isDark, count, label, onClick
 }) => {
 	if (count === 0) return null;
 	return (
-		<button onClick={onClick} className={cn(
-			"absolute left-6 bottom-10 px-4 py-2 rounded-full border flex items-center gap-2 shadow-lg z-10 transition-transform active:scale-95",
-			isDark ? "bg-neutral-900 border-neutral-800 text-neutral-400 hover:bg-neutral-800" : "bg-white border-neutral-100 text-neutral-500 hover:bg-neutral-50"
-		)}>
-			<History size={14} />
+		<Button
+			onClick={onClick}
+			variant="ghost"
+			className={cn(
+				"absolute left-6 bottom-10 h-auto py-2 px-4 rounded-full border shadow-lg z-10 gap-2",
+				isDark
+					? "bg-neutral-900 border-neutral-800 text-neutral-400 hover:bg-neutral-800"
+					: "bg-white border-neutral-100 text-neutral-500 hover:bg-neutral-50"
+			)}
+		>
+			<img src={pinIcon} alt="Pin" className="w-4 h-4 object-contain" />
 			<span className="text-[10px] font-black uppercase tracking-widest">{count} {label}</span>
-		</button>
+		</Button>
 	);
 };
 
-// ─── Main Component ─────────────────────────────────────────────────────────
+// ─── Komponen Utama ────────
 
 /**
- * Komponen Convert - Menampilkan peta interaktif dengan fitur konversi,
+ * Komponen Convert - Menampilkan peta dengan fitur konversi,
  * penyimpanan titik ke database, dan interaksi klik peta.
  */
 const Convert: React.FC<{

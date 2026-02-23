@@ -10,8 +10,9 @@ import { formatDmsString } from "../../../utils/conversion/coordinateService";
 import { formatCoordinate } from "../../../utils/formatNumber";
 import Modal from "../../../common/modal/Modal";
 import { Button } from "../../../common/button/Button";
+import Input from "../../../common/input/Input";
 
-// ─── Sub-Components (internal) ──────────────────────────────────────────────
+// ─── Sub-Komponen (internal) ─────────
 
 /** Input group untuk Decimal Degrees (latitude / longitude). */
 const DdInputGroup: React.FC<{
@@ -23,14 +24,15 @@ const DdInputGroup: React.FC<{
 }> = ({ isDark, label, value, placeholder, onChange }) => (
     <div className="flex items-center gap-3">
         <span className="w-8 text-[11px] font-bold text-neutral-500">{label}</span>
-        <input
+        <Input
             type="number"
             step="any"
             placeholder={placeholder}
             className={cn(
-                "flex-1 p-3.5 rounded-full border text-sm focus:ring-1 focus:ring-brand-red outline-none transition-all",
-                isDark ? "bg-bg-dark-raised border-neutral-800 text-white" : "bg-neutral-50 text-neutral-900"
+                "rounded-full p-3.5",
+                isDark ? "bg-bg-dark-raised border-neutral-800 text-white" : "bg-neutral-50 text-neutral-900 border-neutral-200"
             )}
+            containerClassName="flex-1"
             value={value}
             onChange={(e) => onChange(e.target.value)}
         />
@@ -53,24 +55,24 @@ const DmsInputGroup: React.FC<{
     };
 
     const inputClass = cn(
-        "w-full p-3 text-center rounded-full border text-sm focus:ring-1 focus:ring-brand-red outline-none transition-all",
-        isDark ? "bg-bg-dark-raised border-neutral-800 text-white" : "bg-neutral-50 text-neutral-900"
+        "rounded-full p-3 text-center",
+        isDark ? "bg-bg-dark-raised border-neutral-800 text-white" : "bg-neutral-50 text-neutral-900 border-neutral-200"
     );
 
     return (
         <div className="flex items-center gap-3">
             <span className="w-8 text-[11px] font-bold text-neutral-500">{label}</span>
-            <div className="flex-1 flex gap-2">
-                <input type="number" placeholder="Deg" className={inputClass}
+            <div className="flex-1 flex gap-3">
+                <Input type="number" placeholder="Deg" className={inputClass} containerClassName="w-full"
                     value={value.deg || ""} onChange={(e) => onChange({ ...value, deg: Number(e.target.value) })} />
-                <input type="number" placeholder="Min" className={inputClass}
+                <Input type="number" placeholder="Min" className={inputClass} containerClassName="w-full"
                     value={value.min || ""} onChange={(e) => onChange({ ...value, min: Number(e.target.value) })} />
-                <input type="number" placeholder="Sec" className={inputClass}
+                <Input type="number" placeholder="Sec" className={inputClass} containerClassName="w-full"
                     value={value.sec || ""} onChange={(e) => onChange({ ...value, sec: Number(e.target.value) })} />
                 <button onClick={handleDirToggle}
                     className={cn(
-                        "w-14 p-3 rounded-full border text-xs font-bold transition-all active:scale-95 hover:text-brand-red",
-                        isDark ? "bg-bg-dark-raised border-neutral-800 text-white hover:bg-neutral-800" : "bg-neutral-50 text-neutral-900 hover:bg-neutral-100"
+                        "w-18 h-12 shrink-0 rounded-full border text-sm font-black transition-all active:scale-95 hover:text-brand-red",
+                        isDark ? "bg-bg-dark-raised border-neutral-800 text-white hover:bg-neutral-800" : "bg-neutral-50 text-neutral-900 border-neutral-200 hover:bg-neutral-100"
                     )}
                 >
                     {value.dir}
@@ -161,7 +163,7 @@ const ConfirmOverlay: React.FC<{
     );
 };
 
-// ─── Main Component ─────────────────────────────────────────────────────────
+// ─── Komponen Utama ───────────
 
 interface ConvertModalProps {
     isOpen: boolean;
@@ -217,7 +219,7 @@ const ConvertModal: React.FC<ConvertModalProps> = ({
                 isDark ? "bg-bg-dark-base border-neutral-800 shadow-black" : "bg-white border-neutral-100"
             )}
         >
-            {/* Confirm overlay (absolute positioned inside modal) */}
+            {/* Overlay konfirmasi (posisi absolut di dalam modal) */}
             <ConfirmOverlay
                 show={showConfirm}
                 isDark={isDark}
@@ -226,12 +228,12 @@ const ConvertModal: React.FC<ConvertModalProps> = ({
                 onConfirm={handleConfirmPin}
             />
 
-            {/* Modal Title */}
+            {/* Judul Modal */}
             <h2 className={cn("text-xl font-black tracking-tight mb-4", isDark ? "text-white" : "text-neutral-900")}>
                 {t.modalTitle}
             </h2>
 
-            {/* Tab Switcher */}
+            {/* Pengalih Tab */}
             <div className={cn("flex p-1 rounded-full mb-5", isDark ? "bg-bg-dark-raised" : "bg-neutral-100")}>
                 {(["DMS2DD", "DD2DMS"] as const).map((tab) => (
                     <button key={tab} onClick={() => setActiveTab(tab)}
@@ -247,7 +249,7 @@ const ConvertModal: React.FC<ConvertModalProps> = ({
                 ))}
             </div>
 
-            {/* Input Section */}
+            {/* Bagian Input */}
             <div className="space-y-5">
                 <div>
                     <span className={cn("text-[10px] font-black uppercase tracking-[0.15em] px-1", isDark ? "text-neutral-500" : "text-neutral-400")}>
@@ -268,7 +270,7 @@ const ConvertModal: React.FC<ConvertModalProps> = ({
                     </div>
                 </div>
 
-                {/* Divider with icon */}
+                {/* Pemisah dengan ikon */}
                 <div className="relative flex justify-center py-6 h-4">
                     <div className={cn("absolute top-1/2 left-0 right-0 h-[1px]", isDark ? "bg-neutral-900" : "bg-neutral-100")} />
                     <div className={cn("relative z-10 w-8 h-8 rounded-full border flex items-center justify-center text-brand-red",
@@ -277,7 +279,7 @@ const ConvertModal: React.FC<ConvertModalProps> = ({
                     </div>
                 </div>
 
-                {/* Output Section */}
+                {/* Bagian Output */}
                 <div>
                     <span className={cn("text-[10px] font-black uppercase tracking-[0.15em] px-1", isDark ? "text-neutral-500" : "text-neutral-400")}>
                         {t.to} ({activeTab === "DMS2DD" ? "DD" : "DMS"})
@@ -287,7 +289,7 @@ const ConvertModal: React.FC<ConvertModalProps> = ({
                     </div>
                 </div>
 
-                {/* Save Button */}
+                {/* Tombol Simpan */}
                 <Button fullWidth size="lg" onClick={() => setShowConfirm(true)}
                     className="rounded-2xl shadow-xl shadow-rose-500/20 text-xs font-black uppercase tracking-[0.2em] mt-4">
                     {t.btnSave}

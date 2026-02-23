@@ -41,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-5xl"
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-100 w-[90%] max-w-5xl"
         >
             <div
                 className={cn(

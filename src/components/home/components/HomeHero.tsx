@@ -118,7 +118,7 @@ const HomeHero: React.FC<HomeHeroProps> = ({ isDark, t, setActiveTab }) => {
                     ))}
                 </div>
 
-                {/* CTA Buttons */}
+                {/* Tombol Panggilan Aksi (CTA) */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}

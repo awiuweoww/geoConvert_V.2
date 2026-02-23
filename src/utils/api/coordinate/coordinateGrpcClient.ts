@@ -26,12 +26,9 @@ import {
 
 /**
  * URL target gRPC-Web proxy (Envoy / APISIX).
- *
- * Opsi 1: Langsung ke proxy lokal (development)
- * Opsi 2: Melalui APISIX gateway (production)
+ * Diambil dari file .env (RSPACK_GRPC_HOST).
  */
-// const GRPC_HOST = "http://localhost:8080"; // Contoh proxy lokal
-const GRPC_HOST = "http://localhost:9080"; // Melalui APISIX gateway (Default)
+const GRPC_HOST = process.env.RSPACK_GRPC_HOST || "http://localhost:9080";
 
 /** Instance Promise-based gRPC-Web client (Pure gRPC-Web). */
 const client = new CoordinateServicePromiseClient(GRPC_HOST, null, {
@@ -63,7 +60,7 @@ interface DeleteAllPointsResult {
 	deletedCount: number;
 }
 
-// ─── Helper ─────────────────────────────────────────────────────────────────
+
 
 /** Konversi protobuf Point ke plain object. */
 function toPointData(p: Point): PointData {

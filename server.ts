@@ -3,16 +3,20 @@ import * as protoLoader from "@grpc/proto-loader";
 import mysql from "mysql2/promise";
 import path from "path";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 
 // 1. Konfigurasi Database
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const pool = mysql.createPool({
-	host: "localhost",
-	user: "root",
-	password: "",
-	database: "geoconvert_db",
+	host: process.env.DB_HOST || "localhost",
+	user: process.env.DB_USER || "root",
+	password: process.env.DB_PASSWORD || "",
+	database: process.env.DB_NAME || "geoconvert_db",
 	waitForConnections: true,
 	connectionLimit: 10
 });
@@ -132,7 +136,7 @@ server.addService(coordinateProto.service, {
 });
 
 // 4. Menjalankan Server
-const port = "50051"; // Gunakan port standar gRPC
+const port = process.env.PORT || "50051"; // Gunakan port dari .env atau fallback ke 50051
 server.bindAsync(
 	`0.0.0.0:${port}`,
 	grpc.ServerCredentials.createInsecure(),

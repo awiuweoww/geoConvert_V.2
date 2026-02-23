@@ -27,7 +27,6 @@ const SavedPointsListModal: React.FC<SavedPointsListModalProps> = ({
     onPointDeleted
 }) => {
     const [points, setPoints] = useState<PointData[]>([]);
-    const [sortOrder, setSortOrder] = useState<"latest" | "oldest">("latest");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -42,7 +41,7 @@ const SavedPointsListModal: React.FC<SavedPointsListModalProps> = ({
             const response = await coordinateClient.getPoints({});
             setPoints(response.points);
         } catch (error) {
-            console.error("Failed to fetch points:", error);
+            console.error("Gagal fetch data", error);
         } finally {
             setLoading(false);
         }
@@ -61,11 +60,7 @@ const SavedPointsListModal: React.FC<SavedPointsListModalProps> = ({
         }
     };
 
-    const sortedPoints = [...points].sort((a, b) => {
-        const dateA = new Date(a.createdAt).getTime();
-        const dateB = new Date(b.createdAt).getTime();
-        return sortOrder === "latest" ? dateB - dateA : dateA - dateB;
-    });
+
 
     const columns: Column<PointData>[] = [
         {
@@ -138,39 +133,9 @@ const SavedPointsListModal: React.FC<SavedPointsListModalProps> = ({
                 )}>
                     {points.length} Titik ditemukan
                 </span>
-                <button
-                    type="button"
-                    onClick={() => setSortOrder(prev => prev === "latest" ? "oldest" : "latest")}
-                    className={cn(
-                        "flex items-center gap-2 p-2 rounded-xl border transition-all active:scale-95 group",
-                        isDark
-                            ? "bg-neutral-900 border-neutral-800 text-neutral-400 hover:text-white"
-                            : "bg-neutral-50 border-neutral-100 text-neutral-500 hover:text-neutral-900"
-                    )}
-                    aria-label={`Sort by ${sortOrder === "latest" ? "oldest" : "latest"}`}
-                >
-                    <span className="text-[10px] font-bold uppercase tracking-widest mr-1">
-                        {sortOrder === "latest" ? "Terbaru" : "Terlama"}
-                    </span>
-                    <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        strokeWidth="0"
-                        viewBox="0 0 512 512"
-                        height="14"
-                        width="14"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        {sortOrder === "latest" ? (
-                            <path d="M304 416h-64a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h64a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm-128-64h-48V48a16 16 0 0 0-16-16H80a16 16 0 0 0-16 16v304H16c-14.19 0-21.37 17.24-11.29 27.31l80 96a16 16 0 0 0 22.62 0l80-96C197.35 369.26 190.22 352 176 352zm256-192H240a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h192a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm-64 128H240a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zM496 32H240a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h256a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z" />
-                        ) : (
-                            <path d="M240 96h64a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16h-64a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16zm0 128h128a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16H240a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16zm256 192H240a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h256a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm-256-64h192a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16H240a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16zm-64 0h-48V48a16 16 0 0 0-16-16H80a16 16 0 0 0-16 16v304H16c-14.19 0-21.37 17.24-11.29 27.31l80 96a16 16 0 0 0 22.62 0l80-96C197.35 369.26 190.22 352 176 352z" />
-                        )}
-                    </svg>
-                </button>
             </div>
             <Table<PointData>
-                data={sortedPoints}
+                data={points}
                 columns={columns}
                 keyExtractor={(item) => item.id}
                 isLoading={loading}

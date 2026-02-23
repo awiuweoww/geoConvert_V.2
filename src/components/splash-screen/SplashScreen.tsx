@@ -25,7 +25,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ progress }) => {
 				"bg-brand-red text-white font-montserrat select-none w-screen h-screen"
 			)}
 		>
-			{/* Background Pattern */}
+			{/* Pola Latar Belakang */}
 			<div
 				className="absolute inset-0 opacity-15"
 				style={{
@@ -36,7 +36,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ progress }) => {
 			/>
 
 			<div className="relative z-10 flex flex-col items-center w-full max-w-[480px] px-10">
-				{/* Logo Container */}
+				{/* Kontainer Logo */}
 				<div className="mb-10 opacity-0 animate-zoom-in">
 					<div className="w-28 h-28 bg-white rounded-3xl p-5 shadow-2xl flex items-center justify-center">
 						<img
@@ -47,7 +47,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ progress }) => {
 					</div>
 				</div>
 
-				{/* Brand Group */}
+				{/* Grup Brand */}
 				<div className="text-center mb-16 flex flex-col items-center">
 					<div className="relative h-12 inline-block">
 						<h1 className="text-4xl font-black uppercase typewriter overflow-hidden whitespace-nowrap">
@@ -59,7 +59,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ progress }) => {
 					</p>
 				</div>
 
-				{/* Loading Progress */}
+				{/* Progres Pemuatan */}
 				<div className="w-full space-y-4 opacity-0 animate-fade-in-up delay-1000">
 					<div className="flex justify-between items-end mb-1">
 						<span className="text-lg font-bold italic">Memuat...</span>
@@ -77,7 +77,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ progress }) => {
 				</div>
 			</div>
 
-			{/* Footer Info */}
+			{/* Info Footer */}
 			<div className="absolute bottom-10 left-0 right-0 text-center space-y-2 opacity-0 animate-fade-in-up delay-1000">
 				<p className="text-[10px] tracking-[0.3em] opacity-40 uppercase font-bold">
 					v1.0.1 - Geographic Converter
