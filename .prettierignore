@@ -1,0 +1,23 @@
+# Local
+.DS_Store
+*.local
+*.log*
+
+# Dist
+node_modules
+dist/
+coverage
+.env
+.env.*
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Generated
+gen/
+docs/
+
+# Metadata
+package-lock.json

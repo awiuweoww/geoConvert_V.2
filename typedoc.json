@@ -1,0 +1,24 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"entryPoints": [
+		"./src/main.tsx",
+		"./src/App.tsx",
+		"./src/components/home/Home.tsx",
+		"./src/components/convert/Convert.tsx",
+		"./src/components/tutorial/Tutorial.tsx",
+		"./src/hooks/useMapLogic.ts",
+		"./src/hooks/useCoordinateConverter.ts",
+		"./src/hooks/useTheme.ts",
+		"./src/utils/conversion/coordinateService.ts",
+		"./src/utils/map/mapService.ts",
+		"./src/types/geoTypes.ts"
+	],
+	"out": "docs",
+	"name": "GeoConvert Documentation",
+	"includeVersion": true,
+	"exclude": [
+		"**/*.test.ts"
+	],
+	"readme": "./README.md",
+	"cleanOutputDir": true
+}

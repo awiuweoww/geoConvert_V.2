@@ -1,0 +1,23 @@
+# File Konfigurasi untuk APISIX Dashboard (User Interface)
+conf:
+  listen:
+    host: 0.0.0.0
+    port: 9000 # Port tempat Dashboard berjalan di dalam kontainer
+  allow_list:
+    - 0.0.0.0/0 # Mengizinkan akses login dari IP mana saja
+
+# Alamat database etcd agar Dashboard bisa membaca data Route/Plugin
+etcd:
+  endpoints:
+    - "http://etcd:2379" 
+  prefix: "/apisix"
+  user: ""
+  password: ""
+
+# Pengaturan akun untuk login ke Dashboard via browser
+authentication:
+  secret: "secret"
+  expire_time: 3600 # Waktu sesi login (detik)
+  users:
+    - username: "admin"
+      password: "admin"

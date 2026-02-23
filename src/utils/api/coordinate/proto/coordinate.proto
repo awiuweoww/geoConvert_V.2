@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+/**
+ * Message Point mewakili satu data koordinat yang tersimpan di database.
+ * Ini digunakan untuk menampilkan data dalam tabel.
+ */
+message Point {
+  // ID unik dari database (Nomor)
+  int32 id = 1;
+  
+  // Posisi Lintang (Latitude)
+  double latitude = 2;
+  
+  // Posisi Bujur (Longitude)
+  double longitude = 3;
+  
+  // Waktu pembuatan data (Format: "27 Oct 2023, 10:00")
+  string created_at = 4;
+}
+
+/**
+ * Request untuk menyimpan titik koordinat baru.
+ */
+message SavePointRequest {
+  double latitude = 1;
+  double longitude = 2;
+}
+
+/**
+ * Response setelah berhasil menyimpan titik koordinat.
+ */
+message SavePointResponse {
+  // Mengembalikan data point yang baru saja disimpan (termasuk ID dan Timestamp dari DB)
+  Point point = 1;
+}
+
+/**
+ * Request untuk mengambil semua daftar titik yang tersimpan.
+ */
+message GetPointsRequest {
+  // Kosong karena kita ingin mengambil semua data
+}
+
+/**
+ * Response yang berisi daftar semua titik koordinat.
+ */
+message GetPointsResponse {
+  // 'repeated' berarti ini adalah sebuah Array/List dari message Point
+  repeated Point points = 1;
+}
+
+/**
+ * Request untuk menghapus satu titik koordinat berdasarkan ID.
+ */
+message DeletePointRequest {
+  int32 id = 1;
+}
+
+/**
+ * Response setelah berhasil menghapus titik koordinat.
+ */
+message DeletePointResponse {
+  // Status keberhasilan, true jika berhasil dihapus
+  bool success = 1;
+}
+
+/**
+ * Request untuk menghapus SEMUA titik koordinat.
+ */
+message DeleteAllPointsRequest {
+  // Kosong karena kita ingin menghapus semuanya
+}
+
+/**
+ * Response setelah berhasil menghapus semua titik koordinat.
+ */
+message DeleteAllPointsResponse {
+  // Jumlah data yang terhapus
+  int32 deleted_count = 1;
+}
+
+/**
+ * Service CoordinateService mendefinisikan fungsi-fungsi (RPC) 
+ * yang bisa dipanggil oleh Frontend ke Backend.
+ */
+service CoordinateService {
+  // Fungsi untuk menyimpan koordinat baru ke database MySQL
+  rpc SavePoint(SavePointRequest) returns (SavePointResponse);
+  
+  // Fungsi untuk mengambil seluruh data titik dari database untuk ditampilkan di tabel
+  rpc GetPoints(GetPointsRequest) returns (GetPointsResponse);
+
+  // Fungsi untuk menghapus titik koordinat berdasarkan ID
+  rpc DeletePoint(DeletePointRequest) returns (DeletePointResponse);
+
+  // Fungsi untuk menghapus SEMUA titik koordinat
+  rpc DeleteAllPoints(DeleteAllPointsRequest) returns (DeleteAllPointsResponse);
+}

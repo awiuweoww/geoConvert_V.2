@@ -1,0 +1,20 @@
+# File Konfigurasi Utama APISIX (Gateway)
+deployment:
+  role: traditional # Mode standar (Data Plane & Control Plane bersatu)
+  role_traditional:
+    config_provider: etcd # Sumber konfigurasi diambil dari database etcd
+  
+  # Pengaturan akses Admin API
+  admin:
+    allow_admin:
+      - "0.0.0.0/0" # Mengizinkan akses admin dari IP mana saja (termasuk Host Windows Anda)
+    admin_key:
+      - name: admin
+        key: edd1c9f034335f136f87ad84b625c8f1 # Kunci keamanan untuk memanggil API
+        role: admin
+  
+  # Pengaturan koneksi ke database etcd
+  etcd:
+    host:
+      - "http://etcd:2379" # Nama layanan etcd di dalam jaringan Docker
+    prefix: "/apisix" # "Ruangan" folder di database untuk data APISIX

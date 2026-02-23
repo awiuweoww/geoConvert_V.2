@@ -1,0 +1,68 @@
+# File konfigurasi orkestrasi Docker untuk menjalankan stack APISIX
+services:
+
+  # 1. ETCD: Database "Key-Value" tempat menyimpan semua konfigurasi APISIX (Route, Plugin, dll)
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.11
+    container_name: etcd
+    restart: always
+    volumes:
+      - ./etcd-data:/etcd-data # Menyimpan data database agar tidak hilang saat kontainer dihapus
+    command: >
+      /usr/local/bin/etcd
+      --name=etcd
+      --data-dir=/etcd-data
+      --listen-client-urls=http://0.0.0.0:2379
+      --advertise-client-urls=http://etcd:2379
+      --listen-peer-urls=http://0.0.0.0:2380
+      --initial-advertise-peer-urls=http://etcd:2380
+      --initial-cluster=etcd=http://etcd:2380
+      --initial-cluster-state=new
+      --log-level=info
+      --logger=zap
+      --enable-v2=true # Diperlukan untuk dashboard versi tertentu
+    ports:
+      - "2379:2379" # Port untuk akses client ke database
+    healthcheck: # Memastikan database benar-benar sudah siap sebelum layanan lain menyala
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - apisix
+
+  # 2. APISIX: Gateway Utama yang menangani lalu lintas (CORS, gRPC-Web, Proxy)
+  apisix:
+    image: apache/apisix:3.11.0-debian
+    container_name: apisix
+    restart: always
+    volumes:
+      - ./config.yaml:/usr/local/apisix/conf/config.yaml # File konfigurasi utama APISIX
+    depends_on:
+      etcd:
+        condition: service_healthy # Hanya menyala JIKA etcd sudah sehat
+    ports:
+      - "9080:9080" # Gateway Traffic (Tempat frontend memanggil API)
+      - "9180:9180" # Admin API (Tempat kita mengatur Route via PowerShell/Dashboard)
+    networks:
+      - apisix
+
+  # 3. DASHBOARD: Antarmuka berbasis web (UI) untuk mengatur APISIX secara visual
+  dashboard:
+    image: apache/apisix-dashboard:3.0.1-alpine
+    container_name: apisix-dashboard
+    restart: always
+    volumes:
+      - ./conf:/usr/local/apisix-dashboard/conf:ro # Mengambil file conf.yaml dari folder lokal
+    depends_on:
+      etcd:
+        condition: service_healthy
+    ports:
+      - "9000:9000" # Akses Dashboard via browser: http://localhost:9000
+    networks:
+      - apisix
+
+# Jaringan internal agar kontainer bisa saling berkomunikasi menggunakan nama layanan (misal: "http://etcd:2379")
+networks:
+  apisix:
+    driver: bridge
