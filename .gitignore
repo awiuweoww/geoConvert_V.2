@@ -31,3 +31,6 @@ dist-ssr
 
 # Documentation
 docs/
+
+# APISIX / etcd data
+apisix-docker/etcd-data/
