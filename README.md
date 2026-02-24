@@ -1,4 +1,4 @@
-# GeoConvert - PT LEN Geospatial Intelligence System
+# GeoConvert - Geospatial Intelligence System
 
 ![GeoConvert Logo](https://img.shields.io/badge/GeoConvert-v1.0.0-E11D48?style=for-the-badge) ![Status](https://img.shields.io/badge/Status-Development-blue?style=for-the-badge) ![Tests](https://img.shields.io/badge/Tests-Passing-green?style=for-the-badge)
 
